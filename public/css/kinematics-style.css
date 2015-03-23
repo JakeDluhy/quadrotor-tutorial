@@ -1,0 +1,35 @@
+body,h1,h2,h3,h4,h5,h6,div,p {
+  margin: 0;
+}
+
+
+.title {
+  width: 300px;
+  margin: 10px auto;
+  text-align: center;
+}
+.information-container {
+  margin: 10px;
+}
+.control-description {
+  margin: 10px;
+}
+#quadrotor-container {
+  border-right:1px solid black;
+  width: 49.5%;
+  height: 70%;
+  float: left;
+}
+#quadrotor-container2 {
+  width: 49.5%;
+  height: 70%;
+  float: right;
+}
+.controls-container {
+  width: 100%;
+  height: 15%;
+  float: left;
+}
+.control-description {
+  float: left;
+} 

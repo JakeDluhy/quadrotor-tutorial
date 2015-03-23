@@ -1,0 +1,44 @@
+body,h1,h2,h3,h4,h5,h6,div,p {
+  margin: 0;
+}
+
+input {
+  width: 40px;
+}
+#page-information.row {
+  margin-left: 15px;
+}
+
+#page-information {
+  width:29%;
+  float: left;
+}
+.title {
+  width: 300px;
+  margin: 10px auto;
+  text-align: center;
+}
+.information-container {
+  margin: 10px;
+}
+.controls-container {
+  margin: 10px;
+}
+.control-description {
+  width: 100%;
+  margin: 10px;
+}
+#quadrotor-container {
+  border-left:2px solid black;
+  width: 70%;
+  height: 100%;
+  float: right;
+}
+.r-container {
+  padding-top:5px;
+}
+
+.performance div{
+    padding: 10px;
+    /*text-align: center;*/
+}

@@ -1,0 +1,96 @@
+<HTML>
+<HEAD><TITLE>Optimal Control</TITLE>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script src="js/vendor/bootstrap.min.js"></script>
+
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+
+<div class="section-container"><h2>4 Optimal Control</h2></div>
+
+<div class="section-container"><h3><a href="./optimal-control.html">Optimal Control Animation</a></h3></div>
+
+<div class="section-container">
+  <h3>1.1 Section Overview</h3>
+  <p>
+    We saw in the last chapter that control of a quadrotor is implemented using state feedback, and state feedback is implemented through discretionary choice in values called gains. We also saw that it can be quite difficult choosing the right gains to produce the desired behavior. Choosing two values without any true meaning behind them can be quite difficult.<br>
+    <br>
+    In this chapter, we will see how the use of 'optimal control' can help us select gains in a more intuitive way. The premise behind optimal control is creating a cost function for the path of the quadrotor, that can then be minimized. Gains will be discovered that result in the minimum cost, and these can be used as our choices.<br>
+    <br>
+    Finally, we will review the method of changing the cost function, and how that will result in a more intuitive way of picking gains, instead of random shots in the dark.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.2 The Cost Function</h3>
+  <p>
+    Recall that our state can be represented by errors in the actual state in relation to the desired state. Additionally, remember that for each time step we choose inputs that control how the quadrotor moves. We can think of the state errors as a cost of being away from the desired position, and inputs as a cost of putting power/energy into the system. If we wanted to define a function that quantifies the total cost at a single time step, it could be written like this:
+    <span class="equations">
+      $$
+        C_1 = {(x(i))^T}Q{(x(i))} + {(u(i))^T}R{(u(i))}
+      $$
+    </span>
+    Where Q is a square matrix the size of the state, and R is a square matrix the size of the inputs. These are cost matrices, that represent the cost that we want to attribute to each individual element. These are what we choose. We could sum up these costs for each time step from now until a certain point in time and arrive at the a total cost for a path.
+    <span class="equations">
+      $$
+        C_{total} = \frac{1}{2}x(n)^TQ_{final}x(n) + \frac{1}{2}\sum\limits_{i=0}^{n-1} {x(i)^T}Q{(x(i))} + {u(i)^T}R{(u(i))}
+      $$
+    </span>
+    Now, remember our goal is to minimize this function. To do that, we must use the discrete time algebraic riccotti equation.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.3 Discrete Time Algebraic Riccotti Equation</h3>
+  <p>
+    The discrete time algebraic riccotti equation is a mathematical solution to the minimization problem presented above. Given the constratints of the system,
+    <span class="equations">
+      $$
+        x(i+1) = Ax(i) + Bu(i) \text{ for all i } \epsilon \ \{0,...,n-1\}\\
+        x(0) = x_0
+      $$
+    </span>
+    And the summation function defined above, the discrete time algebraic riccotti equation gives a solution in terms of the state matrices A and B, as well as the cost matrices Q and R.
+    <span class="equations">
+      \begin{gather}
+      K_{ss} = (R+B^TP_{ss}B)^{-1}(B^TP_{ss}A)\\
+      P_{ss} = Q + A^TP_{ss}A - (A^TP_{ss}B)(R + B^TP_{ss}B)^{-1}(B^TP_{ss}A)\\
+      \end{gather}
+    </span>
+    From this, we see that we have a solution for the gains that control the system. By applying DARE to each of our state space systems, we are able to optimally solve for the best K matrices.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.4 Picking Q's and R's - <a href="./optimal-control.html">Animation</a></h3>
+  <p>
+    Of course, in order to do this, we must select the Q and R matrices that we input. This is how we design a control system, and the process goes as follows. Take for instance the outer loop x controller. Remember that the states for this system are x position error and x velocity error. The inputs for this system is the pitch angle of the quadrotor.<br>
+    <br>
+    Now if all we cared about was getting to the goal as fast as possible, we could set the first value in the Q matrix to be very high, as shown below.
+    <span class="equation">
+      $$
+        Q = \begin{bmatrix}1000&0\\0&1\end{bmatrix}
+      $$
+    </span>
+    However this would cause two problems. The first is that in order to get to that position, the model would command very high input values. Remember these inputs are the pitch angle of the quadrotor; if they get too high, such as above 90 degrees, then the quadrotor could flip, causing catastrophic failure. Even if the quadrotor didn't flip, this choice in gains could still cause a problem.<br>
+    <br>
+    Although we are getting to the desired position very fast, we are telling our model that we don't care about errors in velocity at all. Therefore the quadrotor will zip to the position... and promptly overshoot it. At this point it will start to move back... and overshoot again.<br>
+    <br>
+    The key to picking gains is to strike a balance that results in the behavior we want. The best way to do this is via simulation that shows the model behave as it is expected to. Play around with choosing different values, and see what happens!
+  </p>
+</div>
+
+
+<div class="footer-container">
+  <button class="btn btn-primary previous"><a class="prev-button" href="manual-control-documentation.html">Previous Lesson</a></button>
+  <button class="btn btn-primary next"><a class="next-button" href="target-game-documentation.html">Next Lesson</a></button>
+</div>
+
+</BODY>
+</HTML>
+

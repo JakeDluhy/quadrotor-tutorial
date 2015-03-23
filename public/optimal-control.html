@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title>Optimal Control</title>
+    <link rel="stylesheet" type="text/css" href="css/optimal-control-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+    <script src="js/vendor/three.min.js"></script>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/trackballControls.js"></script>
+    <script src="js/vendor/sylvester.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+
+    <script src="js/objectDisplay/DisplayLibrary.js"></script>
+    <script src="js/objectDisplay/mathEnvironment.js"></script>
+    <script src="js/objectDisplay/Quadrotor.js"></script>
+    <script src="js/objectDisplay/createDesiredObject.js"></script>
+
+    <script src="js/objectDisplay/optimalControlSetup.js"></script>
+    <script src="fonts/gentilis_bold.typeface.js"></script>
+
+  </head>
+  <body>
+    <div id="page-information" class="row">
+      <div class="col-md-6">
+        <div class="control-description row">
+          <div class='col-md-12'>X direction Q</div>
+          <div class='col-md-6'>Q11 = <input class="xdir-q11"></div><div class='col-md-6'>Q12 = <input class="xdir-q12"><br></div>
+          <div class='col-md-6'>Q21 = <input class="xdir-q21"></div><div class='col-md-6'>Q22 = <input class="xdir-q22"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="xdir-r"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Y direction Q</div>
+          <div class='col-md-6'>Q11 = <input class="ydir-q11"></div><div class='col-md-6'>Q12 = <input class="ydir-q12"><br></div>
+          <div class='col-md-6'>Q21 = <input class="ydir-q21"></div><div class='col-md-6'>Q22 = <input class="ydir-q22"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="ydir-r"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Z direction Q</div>
+          <div class='col-md-6'>Q11 = <input class="zdir-q11"></div><div class='col-md-6'>Q12 = <input class="zdir-q12"><br></div>
+          <div class='col-md-6'>Q21 = <input class="zdir-q21"></div><div class='col-md-6'>Q22 = <input class="zdir-q22"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="zdir-r"></div><div class='col-md-2'></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="control-description row">
+          <div class='col-md-12'>Euler1 Q</div>
+          <div class='col-md-6'>Q11 = <input class="euler1-q11"></div><div class='col-md-6'>Q12 = <input class="euler1-q12"><br></div>
+          <div class='col-md-6'>Q21 = <input class="euler1-q21"></div><div class='col-md-6'>Q22 = <input class="euler1-q22"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="euler1-r"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Euler2 Q</div>
+          <div class='col-md-6'>Q11 = <input class="euler2-q11"></div><div class='col-md-6'>Q12 = <input class="euler2-q12"><br></div>
+          <div class='col-md-6'>Q21 = <input class="euler2-q21"></div><div class='col-md-6'>Q22 = <input class="euler2-q22"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="euler2-r"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Euler3 Q</div>
+          <div class='col-md-6'>Q11 = <input class="euler3-q11"></div><div class='col-md-6'>Q12 = <input class="euler3-q12"><br></div>
+          <div class='col-md-6'>Q21 = <input class="euler3-q21"></div><div class='col-md-6'>Q22 = <input class="euler3-q22"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="euler3-r"></div><div class='col-md-2'></div>
+        </div>
+      </div>
+        <button class="applyQs">Apply Q's and R's</button>
+        <div class="control-description">
+          <p>W = move desired position in positive x</p>
+          <p>S = move desired position in negative x</p>
+
+          <p>A = move desired position in positive y</p>
+          <p>D = move desired position in negative y</p>
+
+          <p>Q = move desired position in positive z</p>
+          <p>E = move desired position in negative z</p>
+        </div>
+        <button class="reset-button">Reset position</button>
+        <button class="start-button">Start</button>
+        <button class="stop-button">Stop</button>
+    </div>
+    <div id='quadrotor-container'></div>
+  </body>
+</html>

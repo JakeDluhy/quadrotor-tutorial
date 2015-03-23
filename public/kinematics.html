@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Kinematics</title>
+    <link rel="stylesheet" type="text/css" href="css/kinematics-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+    <script src="js/vendor/three.min.js"></script>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/trackballControls.js"></script>
+    <script src="js/vendor/math.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/objectDisplay/kinematicsSetup.js"></script>
+    <script src="js/objectDisplay/DisplayLibrary.js"></script>
+    <script src="js/objectDisplay/createSurface.js"></script>
+    <script src="js/objectDisplay/create2DFunction.js"></script>
+    <script src="js/objectDisplay/mathEnvironment.js"></script>
+    <script src="js/objectDisplay/Quadrotor.js"></script>
+    <script src="fonts/gentilis_bold.typeface.js"></script>
+  </head>
+  <body>
+    <div id="quadrotor-container"></div>
+    <div id="quadrotor-container2"></div>
+    <div class="controls-container">
+      <div class="control-description">
+        <p>W = move quadrotor in positive x</p>
+        <p>S = move quadrotor in negative x</p>
+        <p>X position is <span class="xpos">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>A = move quadrotor in positive y</p>
+        <p>D = move quadrotor in negative y</p>
+        <p>Y position is <span class="ypos">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>Q = move quadrotor in positive z</p>
+        <p>E = move quadrotor in negative z</p>
+        <p>Z position is <span class="zpos">0</span></p>
+      </div>
+    </div>
+    <div class="controls-container">
+      <div class="control-description">
+        <p>R = rotate quadrotor about positive Euler Z rotation</p>
+        <p>F = rotate quadrotor about negative Euler Z rotation</p>
+        <p>Euler Z rotation is <span class="zrot">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>T = rotate quadrotor about positive Euler Y rotation</p>
+        <p>F = rotate quadrotor about negative Euler Y rotation</p>
+        <p>Euler Y rotation is <span class="yrot">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>Y = rotate quadrotor about positive Euler X rotation</p>
+        <p>F = rotate quadrotor about negative Euler X rotation</p>
+        <p>Euler Xvrotation is <span class="xrot">0</span></p>
+      </div>
+    </div>
+  </body>
+</html>

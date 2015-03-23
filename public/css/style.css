@@ -1,0 +1,67 @@
+h1,h4 {
+  text-align: center;
+}
+.centered {
+  text-align: center;
+}
+p {
+  text-align: left;
+}
+.intro-pic-container.col-md-3 {
+  padding: 30px;
+}
+.intro-pic, .intro-pic2 {
+  max-width: 100%;
+  border: 1px solid black;
+}
+
+.section-container {
+  width: 75%;
+  margin: 10px auto;
+}
+.section-container > a {
+  font-size: 1.5em;
+}
+
+.abstract-container > h2 {
+  text-align: center;
+}
+.abstract-container > p {
+  text-align: justify;
+}
+
+.equations {
+  line-height: 4em;
+}
+
+.quad-pic, .zrot-pic {
+  display: block;
+  margin: 5px auto;
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.footer-container {
+  height: 75px;
+  width: 75%;
+  margin: 0 auto;
+}
+
+button > a {
+  color: #fff;
+  text-decoration: none;
+}
+button > a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+button.previous {
+  display: block;
+  margin: 20px;
+  float: left;
+}
+button.next {
+  display: block;
+  margin: 20px;
+  float: right;
+}

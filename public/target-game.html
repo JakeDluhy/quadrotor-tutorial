@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>Surface Display</title>
+    <link rel="stylesheet" type="text/css" href="css/target-game-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+    <script src="js/vendor/three.min.js"></script>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/trackballControls.js"></script>
+    <script src="js/vendor/sylvester.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/docCookies.js"></script>
+
+    <script src="js/objectDisplay/DisplayLibrary.js"></script>
+    <script src="js/objectDisplay/mathEnvironment.js"></script>
+    <script src="js/objectDisplay/Quadrotor.js"></script>
+    <script src="js/objectDisplay/createGameTarget.js"></script>
+
+    <script src="js/objectDisplay/targetGameSetup.js"></script>
+    <script src="fonts/gentilis_bold.typeface.js"></script>
+
+  </head>
+  <body>
+    <div id="page-information" class="row">
+      <div class="col-md-6">
+        <div class="control-description row">
+          <div class='col-md-12'>X direction Q</div>
+          <div class='col-md-6'>Q11 = <input class="xdir-q11" value="0.001"></div><div class='col-md-6'>Q12 = <input class="xdir-q12" value="0.00"><br></div>
+          <div class='col-md-6'>Q21 = <input class="xdir-q21" value="0.00"></div><div class='col-md-6'>Q22 = <input class="xdir-q22" value="0.001"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="xdir-r" value="1.00"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Y direction Q</div>
+          <div class='col-md-6'>Q11 = <input class="ydir-q11" value="0.001"></div><div class='col-md-6'>Q12 = <input class="ydir-q12" value="0.00"><br></div>
+          <div class='col-md-6'>Q21 = <input class="ydir-q21" value="0.00"></div><div class='col-md-6'>Q22 = <input class="ydir-q22" value="0.001"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="ydir-r" value="1.00"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Z direction Q</div>
+          <div class='col-md-6'>Q11 = <input class="zdir-q11" value="20.00"></div><div class='col-md-6'>Q12 = <input class="zdir-q12" value="0.00"><br></div>
+          <div class='col-md-6'>Q21 = <input class="zdir-q21" value="0.00"></div><div class='col-md-6'>Q22 = <input class="zdir-q22" value="15.00"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="zdir-r" value="1.00"></div><div class='col-md-2'></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="control-description row">
+          <div class='col-md-12'>Euler1 Q</div>
+          <div class='col-md-6'>Q11 = <input class="euler1-q11" value="0.01"></div><div class='col-md-6'>Q12 = <input class="euler1-q12" value="0.00"><br></div>
+          <div class='col-md-6'>Q21 = <input class="euler1-q21" value="0.00"></div><div class='col-md-6'>Q22 = <input class="euler1-q22" value="0.001"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="euler1-r" value="1.00"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Euler2 Q</div>
+          <div class='col-md-6'>Q11 = <input class="euler2-q11" value="5.00"></div><div class='col-md-6'>Q12 = <input class="euler2-q12" value="0.00"><br></div>
+          <div class='col-md-6'>Q21 = <input class="euler2-q21" value="0.00"></div><div class='col-md-6'>Q22 = <input class="euler2-q22" value="5.00"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="euler2-r" value="1.00"></div><div class='col-md-2'></div>
+        </div>
+        <div class="control-description row">
+          <div class='col-md-12'>Euler3 Q</div>
+          <div class='col-md-6'>Q11 = <input class="euler3-q11" value="5.00"></div><div class='col-md-6'>Q12 = <input class="euler3-q12" value="0.00"><br></div>
+          <div class='col-md-6'>Q21 = <input class="euler3-q21" value="0.00"></div><div class='col-md-6'>Q22 = <input class="euler3-q22" value="5.00"><br></div>
+          <div class='col-md-2'></div><div class='r-container col-md-8'>R = <input class="euler3-r" value="1.00"></div><div class='col-md-2'></div>
+        </div>
+      </div>
+      <button class="applyQs">Apply Q's</button>
+      <button class="reset-button">Reset</button>
+      <button class="start-button">Start</button>
+      <button class="stop-button">Stop</button>
+      <div class="performance row">
+        <div class="timer">Time: <span class="time-display">0.00</span></div>
+        <div class="best-time">Best time: <span class="best-time-display">0.00</span></div>
+      </div>
+    </div>
+    
+    <div id='quadrotor-container'></div>
+  </body>
+</html>

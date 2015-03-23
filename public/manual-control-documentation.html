@@ -1,0 +1,122 @@
+<HTML>
+<HEAD><TITLE>Manual Control</TITLE>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script src="js/vendor/bootstrap.min.js"></script>
+
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+
+<div class="section-container"><h2>3 Quadrotor Control</h2></div>
+<div class="section-container"><h3><a href="./manual-control.html">Manual Control Animation</a></h3></div>
+
+<div class="section-container">
+  <h3>1.1 Section Overview</h3>
+
+  <p>
+    When you think of controlling a quadrotor, what does that mean? If you have an RC controller, and tell a car or a UAV or a quadrotor to go forward, how does it actually do that? Does it just go forward until you stop telling it to go? Then how does it know to gradually start and stop? If it's a quadrotor, how does it correct so that it doesn't fall out of the sky?<br>
+    <br>
+    The answer is that you don't tell the quadrotor to move somewhere. You set the desired position at a location, and the quadrotor is programmed to move to that desired position. In essence, you create an error: the quadrotor is in one spot, and would like to be in another (per your command). Now it must correct itself and move to that position. Now if you move the desired position again, once again the quadrotor will track to it.<br>
+    <br>
+    This is a way of controlling a quadrotor that provides stability and a certain amount of computer optimization. Because we have programmed it beforehand to reach hover state at the desired position, it is much harder for the quadrotor to experience catastrophic failure.<br>
+    <br>
+    We'll see that the process of controlling any robot is about a concept called state feedback: determining outputs based on the existing state of the robot. This is turn is entirely managed by picking values called gains, which control the inputs to the system based on what the existing state is.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.2 Revising the Matrix</h3>
+  <p>
+    Before we continue, we will revise our previous model slightly. You'll note in the matrix we solved for in the last chapter is very sparse - there are a lot of zeros. We can address this by breaking up the different components of the state. In particular, we can write 6 smaller 2x2 matrices: 3 outer and 3 inner. The 3 outer control the desired position of the robot, and the inputs to them are actually angles! The three inner matrices take those desired angular rates and compute the original input torques and forces. The results of this can be seen below
+    <span class="equations">
+      \begin{align}
+        \begin{bmatrix}\dot{{\delta}q_1}\\\ddot{{\delta}q_1}\end{bmatrix} &= 
+        \begin{bmatrix}0&1\\0&0\end{bmatrix}\begin{bmatrix}{\delta}q_1\\\dot{{\delta}q_1}\end{bmatrix} + 
+        \begin{bmatrix}0\\-g\end{bmatrix}\begin{bmatrix}\theta_2\end{bmatrix}\\
+
+        \begin{bmatrix}\dot{{\delta}q_2}\\\ddot{{\delta}q_2}\end{bmatrix} &= 
+        \begin{bmatrix}0&1\\0&0\end{bmatrix}\begin{bmatrix}{\delta}q_2\\\dot{{\delta}q_2}\end{bmatrix} + 
+        \begin{bmatrix}0\\g\end{bmatrix}\begin{bmatrix}\theta_1\end{bmatrix}\\
+
+        \begin{bmatrix}\dot{{\delta}q_3}\\\ddot{{\delta}q_3}\end{bmatrix} &= 
+        \begin{bmatrix}0&1\\0&0\end{bmatrix}\begin{bmatrix}{\delta}q_3\\\dot{{\delta}q_3}\end{bmatrix} + 
+        \begin{bmatrix}0\\-\frac{1}{m}\end{bmatrix}\begin{bmatrix}u_4\end{bmatrix}\\
+
+        \begin{bmatrix}\dot{{\delta}\theta_1}\\\ddot{{\delta}\theta_1}\end{bmatrix} &= 
+        \begin{bmatrix}0&1\\0&0\end{bmatrix}\begin{bmatrix}{\delta}\theta_1\\\dot{{\delta}\theta_1}\end{bmatrix} + 
+        \begin{bmatrix}0\\\frac{1}{J_3}\end{bmatrix}\begin{bmatrix}u_3\end{bmatrix}\\
+
+        \begin{bmatrix}\dot{{\delta}\theta_2}\\\ddot{{\delta}\theta_2}\end{bmatrix} &= 
+        \begin{bmatrix}0&1\\0&0\end{bmatrix}\begin{bmatrix}{\delta}\theta_2\\\dot{{\delta}\theta_2}\end{bmatrix} + 
+        \begin{bmatrix}0\\\frac{1}{J_2}\end{bmatrix}\begin{bmatrix}u_2\end{bmatrix}\\
+
+        \begin{bmatrix}\dot{{\delta}\theta_3}\\\ddot{{\delta}\theta_3}\end{bmatrix} &= 
+        \begin{bmatrix}0&1\\0&0\end{bmatrix}\begin{bmatrix}{\delta}\theta_3\\\dot{{\delta}\theta_3}\end{bmatrix} + 
+        \begin{bmatrix}0\\\frac{1}{J_1}\end{bmatrix}\begin{bmatrix}u_1\end{bmatrix}
+      \end{align}
+    </span>
+    Using this method, its easier to pick control gains with an intuitive sense on how they will affect the robot, as we will see in the next section.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.3 State Feedback</h3>
+  <p>
+    Try to think of the best way to choose forces and torques for a quadrotor would be. If I want to move forward, should I pitch forward a bit? How much should I pitch forward? When should I level off to stop?<br>
+    <br>
+    These are all important questions, and all have to be taken into account when telling the quadrotor to go somewhere. It turns out the best way to do it isn't to try and control every little thing about the robot - that's far too complicated. Instead we tell the quadrotor to go to a certain position, and program it with a method to reach a new position.<br>
+    <br>
+    This is done via state feedback. This is the method of using the current state of the quadrotor to determine what inputs are necessary for future states. In order to use it, we first find the error in the current state - where the state is now minus where it wants to be, which is represented in the equations below.
+    <span class="equations">
+      $$
+        {\delta}q_1 = q_1 - q_{1,desired}\\
+        {\delta}\theta_2 = \theta_2 - \theta_{2,desired}\\
+        etc...\\
+        \boldsymbol{\delta}\textbf{x} = \textbf{x} - \textbf{x}_{desired}
+      $$
+    </span>
+    Then, we take this error and multiply it by the negative of a new matrix, called a gain matrix and represented by the letter K. This is set equal to the inputs, and now we have a choice for what we will use to control the quadrotor.
+    <span class="equations">
+      $$
+        \textbf{u} = -K*\boldsymbol{\delta}\textbf{x}
+      $$
+    </span>
+    The gain matrix is a set of values that determine how certain errors will affect the choice in inputs. For example, consider the equation below. In this case, the errors are of x position and x velocity, and the input is the pitch angle, which will move the quadrotor forward.
+    <span class="equations">
+      $$
+        \theta_2 = -(k_1(q_1 - q_{1,desired}) + k_2(v_1 - v_{1,desired}))
+      $$
+    </span>
+    By adjusting k1, this will change the input based on the position error. By adjusting k2, this will change the input based on velocity error. By tweaking the gains, we can adjust the behavior of our quadrotor.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.4 Picking Gains</h3>
+  <p>
+    Now that we know how the gains affect the inputs, all that is left is to pick certain values that will produce the results we want. This is often done by trial and error, and in industry, it is sometimes still done by hand. Veterans with many years of experience have a general sense of what the gains should be to produce the best results.<br>
+    <br>
+    We'll find that its not nearly so simple. Decoupling the system helps (otherwise we would have had a 4x12 matrix!), but its still difficult to choose correctly, as tweaking one parameter could have consequences on several states.
+  </p>
+</div>
+
+<div class="section-container">
+  <h3>1.5 Controlling the Quadrotor - <a href="./manual-control.html">Animation</a></h3>
+  <p>
+    In the animation, trying changing the gains to make the performance of the quadrotor better. The default values are entered as 1 and 1 for each system, but you'll find behavior is quite terrible. Try tweaking them to make the quadrotor behave better (hint: keep the gains around 1 or less than 1). Check your performance by moving the black 'desired position' marker around, and watch the quadrotor track it.
+  </p>
+</div>
+
+
+<div class="footer-container">
+  <button class="btn btn-primary previous"><a class="prev-button" href="dynamics-documentation.html">Previous Lesson</a></button>
+  <button class="btn btn-primary next"><a class="next-button" href="optimal-control-documentation.html">Next Lesson</a></button>
+</div>
+
+</BODY>
+</HTML>
+

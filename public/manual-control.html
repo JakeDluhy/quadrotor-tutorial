@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Manual Control</title>
+    <link rel="stylesheet" type="text/css" href="css/dynamics-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+    <script src="js/vendor/three.min.js"></script>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/trackballControls.js"></script>
+    <script src="js/vendor/sylvester.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+
+    <script src="js/objectDisplay/DisplayLibrary.js"></script>
+    <script src="js/objectDisplay/mathEnvironment.js"></script>
+    <script src="js/objectDisplay/Quadrotor.js"></script>
+    <script src="js/objectDisplay/createDesiredObject.js"></script>
+
+    <script src="js/objectDisplay/manualSetup.js"></script>
+    <script src="fonts/gentilis_bold.typeface.js"></script>
+
+  </head>
+  <body>
+    <div id="page-information">
+      <div class="control-description">
+        X direction K <br>
+        K1 = <input class="xdir-k1"> K2 = <input class="xdir-k2">
+      </div>
+      <div class="control-description">
+        Y direction K<br>
+        K1 = <input class="ydir-k1"> K2 = <input class="ydir-k2">
+      </div>
+      <div class="control-description">
+        Z direction K<br>
+        K1 = <input class="zdir-k1"> K2 = <input class="zdir-k2">
+      </div>
+      <div class="control-description">
+        Euler1 K<br>
+        K1 = <input class="euler1-k1"> K2 = <input class="euler1-k2">
+      </div>
+      <div class="control-description">
+        Euler2 K<br>
+        K1 = <input class="euler2-k1"> K2 = <input class="euler2-k2">
+      </div>
+      <div class="control-description">
+        Euler3 K<br>
+        K1 = <input class="euler3-k1"> K2 = <input class="euler3-k2">
+      </div>
+      <button class="applyKs">Apply K's</button>
+      <div class="control-description">
+        <p>W = move desired position in positive x</p>
+        <p>S = move desired position in negative x</p>
+
+        <p>A = move desired position in positive y</p>
+        <p>D = move desired position in negative y</p>
+
+        <p>Q = move desired position in positive z</p>
+        <p>E = move desired position in negative z</p>
+      </div>
+      <button class="reset-button">Reset position</button>
+      <button class="start-button">Start</button>
+      <button class="stop-button">Stop</button>
+    </div>
+    <div id='quadrotor-container'></div>
+  </body>
+</html>

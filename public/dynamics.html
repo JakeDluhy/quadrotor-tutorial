@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Dynamics</title>
+    <link rel="stylesheet" type="text/css" href="css/dynamics-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+
+    <script src="js/vendor/three.min.js"></script>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/trackballControls.js"></script>
+    <script src="js/vendor/math.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+
+    <script src="js/objectDisplay/DisplayLibrary.js"></script>
+    <script src="js/objectDisplay/mathEnvironment.js"></script>
+    <script src="js/objectDisplay/Quadrotor.js"></script>
+    <script src="fonts/gentilis_bold.typeface.js"></script>
+
+    <script src="js/objectDisplay/dynamicsSetup.js"></script>
+  </head>
+  <body>
+    <div id="page-information">
+      <div class="control-description">
+        <p>Q: Add 0.01 force to rotor 1</p>
+        <p>A: Remove 0.01 force to rotor 1</p>
+        <p>Rotor 1 force is <span class="rotor1-force">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>W: Add 0.01 force to rotor 2</p>
+        <p>S: Remove 0.01 force to rotor 2</p>
+        <p>Rotor 2 force is <span class="rotor2-force">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>E: Add 0.01 force to rotor 3</p>
+        <p>D: Remove 0.01 force to rotor 3</p>
+        <p>Rotor 3 force is <span class="rotor3-force">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>R: Add 0.01 force to rotor 4</p>
+        <p>F: Remove 0.01 force to rotor 4</p>
+        <p>Rotor 4 force is <span class="rotor4-force">0</span></p>
+      </div>
+      <div class="control-description">
+        <p>Enter: Apply one Time step of motion</p>
+      </div>
+    </div>
+    <div id='quadrotor-container'></div>
+  </body>
+</html>
